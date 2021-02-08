@@ -1,0 +1,12 @@
+{
+  "dbconfig": {
+    "dbschema": "tiny_seat",
+    "host": "localhost",
+    "username": "root",
+    "password": "1234",
+    "dialect": "mysql"
+  },
+  "jwt": {
+    "secret": "e2e42a07550863f8b67f5eb252581f6d"
+  }
+}
