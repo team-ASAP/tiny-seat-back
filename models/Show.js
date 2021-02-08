@@ -47,7 +47,7 @@ const Show = connector.define("Show", {
     allowNull: true
   },
   detail: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull: true
   },
   is_delete,
