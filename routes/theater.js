@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const showService = require("./../services/ShowService");
+const theaterService = require("./../services/TheaterService");
 const { isLogined } = require("./../middlewares/auth");
 const { success, failed } = require("./../common");
 
 /**
  * @swagger
- * /show/list:
+ * /theater/list:
  *  get:
- *    summary: show list
- *    description: 공연 리스트
+ *    summary: theater list
+ *    description: 극단 리스트
  *    parameters:
  *      - in: query
  *        name: order
@@ -17,18 +17,12 @@ const { success, failed } = require("./../common");
  *        description: 정렬 방법 - C; 최근순, O; 열린순, A; 가나다순, 입력 안할시 최근순
  *        schema:
  *          type: string
- *      - in: query
- *        name: isDone
- *        required: false
- *        description: 폐막 포함 여부
- *        schema:
- *          type: boolean
  *    responses:
  *       200:
- *         description: A list of Shows.
+ *         description: A list of Theaters.
  */
 router.get("/list", isLogined, (req, res, next) => {
-  const { order, isDone } = req.query;
+  const { order } = req.query;
   let useOrder = [[]];
   let query = {};
   switch (order) {
@@ -42,13 +36,8 @@ router.get("/list", isLogined, (req, res, next) => {
       useOrder = [["create_dt", "asc"]];
       break;
   }
-  if (!isDone) {
-    query = {
-      end_dt: { $gte: new Date() },
-    };
-  }
 
-  showService
+  theaterService
     .findAll(query, useOrder, 20, 0)
     .then((response) => {
       res.json(success(response, "success"));

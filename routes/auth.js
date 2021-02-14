@@ -2,15 +2,11 @@ const express = require("express");
 const router = express.Router();
 const userService = require("../services/UserService");
 const jwt = require("jsonwebtoken");
-
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
+const { isLogined } = require("../middlewares/auth");
 
 const login = (req, res, user) => {
   const jwt_secret = req.app.get("jwt-secret");
-  const token = jwt.sign({ token: user.token }, jwt_secret, {
+  const token = jwt.sign({ email: user.email }, jwt_secret, {
     expiresIn: "7d",
   });
 
@@ -24,14 +20,11 @@ const login = (req, res, user) => {
   return userInfo;
 };
 
-router.post("/login", (req, res, next) => {
+router.post("/login", isLogined, (req, res, next) => {
   const { user } = req.body;
-  console.log(user);
-
   userService
     .findByEmail(user.email)
     .then((value) => {
-      console.log(value);
       if (!value) {
         // 회원가입
         userService

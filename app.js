@@ -17,6 +17,7 @@ let indexRouter = require("./routes/index");
 let usersRouter = require("./routes/users");
 let authRouter = require("./routes/auth");
 let showRouter = require("./routes/show");
+let theaterRouter = require("./routes/theater");
 
 const dbConnector = require("./dbConnector");
 dbConnector
@@ -85,6 +86,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/show", showRouter);
+app.use("/theater", theaterRouter);
 app.use(
   "/api-docs",
   swaggerUi.serve,
