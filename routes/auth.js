@@ -20,7 +20,7 @@ const login = (req, res, user) => {
   return userInfo;
 };
 
-router.post("/login", isLogined, (req, res, next) => {
+router.post("/login", (req, res, next) => {
   const { user } = req.body;
   userService
     .findByEmail(user.email)
